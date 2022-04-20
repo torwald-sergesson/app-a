@@ -3,6 +3,7 @@ package client
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -51,10 +52,10 @@ func (cli *Client) Me() (dto.User, error) {
 	if err != nil {
 		return dto.User{}, fmt.Errorf("fail to do request: %w", err)
 	}
-	var body []byte
 	defer resp.Body.Close()
 
-	if _, err = resp.Body.Read(body); err != nil {
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
 		return dto.User{}, fmt.Errorf("fail to read body: %w", err)
 	}
 	log.Printf("body: %s\n", body)
