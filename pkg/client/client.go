@@ -3,6 +3,7 @@ package client
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 	"time"
@@ -39,28 +40,30 @@ func (cli *Client) url(path string) (url.URL, error) {
 func (cli *Client) Me() (dto.User, error) {
 	u, err := cli.url("/api/me")
 	if err != nil {
-		return dto.User{}, nil
+		return dto.User{}, fmt.Errorf("fail to build url: %w", err)
 	}
 	req, err := http.NewRequest(http.MethodGet, u.String(), nil)
 	if err != nil {
-		return dto.User{}, err
+		return dto.User{}, fmt.Errorf("fail to build request: %w", err)
 	}
+	log.Printf("request; method=%s; url=%s\n", req.Method, req.URL.String())
 	resp, err := cli.httpClient.Do(req)
 	if err != nil {
-		return dto.User{}, err
+		return dto.User{}, fmt.Errorf("fail to do request: %w", err)
 	}
 	var body []byte
 	defer resp.Body.Close()
 
 	if _, err = resp.Body.Read(body); err != nil {
-		return dto.User{}, err
+		return dto.User{}, fmt.Errorf("fail to read body: %w", err)
 	}
+	log.Printf("body: %s\n", body)
 	if resp.StatusCode != http.StatusOK {
-		return dto.User{}, fmt.Errorf("")
+		return dto.User{}, fmt.Errorf("wrong status code; expected=%d; received=%d", http.StatusOK, resp.StatusCode)
 	}
 	var user dto.User
 	if err = json.Unmarshal(body, &user); err != nil {
-		return dto.User{}, err
+		return dto.User{}, fmt.Errorf("fail to unmarshal body: %w", err)
 	}
 	return user, nil
 }
