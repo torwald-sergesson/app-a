@@ -1,0 +1,4 @@
+# github.com/torwald-sergesson/app-a/pkg/dto v0.0.0 => ./pkg/dto
+## explicit; go 1.17
+github.com/torwald-sergesson/app-a/pkg/dto
+# github.com/torwald-sergesson/app-a/pkg/dto => ./pkg/dto
