@@ -15,6 +15,7 @@ func (h *meHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	data := dto.User{
 		ID:   1,
 		Name: "Tor",
+		Age:  44,
 	}
 
 	buf, err := json.Marshal(&data)
