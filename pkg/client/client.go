@@ -67,6 +67,6 @@ func (cli *Client) Me() (dto.User, error) {
 	if err = json.Unmarshal(body, &user); err != nil {
 		return dto.User{}, fmt.Errorf("fail to unmarshal body: %w", err)
 	}
-	log.Printf("tags: [%s]\n", strings.Join(user.Tags, " "))
+	log.Printf("user %d tags: [%s]\n", user.ID, strings.Join(user.Tags, " "))
 	return user, nil
 }
