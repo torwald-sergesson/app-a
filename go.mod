@@ -1,4 +1,4 @@
-module github.com/torwald-sergesson/app-a
+module github.com/torwald-sergesson/app-a/v2
 
 go 1.17
 
