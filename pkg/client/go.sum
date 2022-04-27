@@ -2,3 +2,5 @@ github.com/torwald-sergesson/app-a/pkg/dto/v2 v2.0.2 h1:zLwHpmof0tMXxz/d0f7wgeXh
 github.com/torwald-sergesson/app-a/pkg/dto/v2 v2.0.2/go.mod h1:Omln++29+0MSnvnhiqZ9bGWwluRGD/N2no2QBwET/zc=
 github.com/torwald-sergesson/app-a/pkg/dto/v2 v2.1.0 h1:PQRtiT8ETeLUprMS20FAbvnj0OX3UA6AeyHlrWLTEjw=
 github.com/torwald-sergesson/app-a/pkg/dto/v2 v2.1.0/go.mod h1:Omln++29+0MSnvnhiqZ9bGWwluRGD/N2no2QBwET/zc=
+github.com/torwald-sergesson/app-a/pkg/dto/v2 v2.1.2 h1:buxPqtY+VX9YChTJyGfuJoognoPooFBcApMp/FCYiW8=
+github.com/torwald-sergesson/app-a/pkg/dto/v2 v2.1.2/go.mod h1:Omln++29+0MSnvnhiqZ9bGWwluRGD/N2no2QBwET/zc=
