@@ -29,24 +29,25 @@ func (h *baseHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Write(buf)
 }
 
+var grpAsgard = dto.Group{
+	ID:   1,
+	Name: "Asgard",
+}
+
+var usrOdin = dto.User{
+	ID:    1,
+	Name:  "Odin",
+	Age:   45,
+	Group: grpAsgard,
+	Tags:  []string{"hallo", "world", "new"},
+}
+
 var meUserHandler = &baseHandler{
-	newObject: func() interface{} {
-		return dto.User{
-			ID:   1,
-			Name: "Odin",
-			Age:  45,
-			Tags: []string{"hallo", "world", "new"},
-		}
-	},
+	newObject: func() interface{} { return usrOdin },
 }
 
 var myGroupHandler = &baseHandler{
-	newObject: func() interface{} {
-		return dto.Group{
-			ID:   1,
-			Name: "Asgard",
-		}
-	},
+	newObject: func() interface{} { return grpAsgard },
 }
 
 func main() {
