@@ -72,7 +72,7 @@ func (cli *Client) Me() (dto.User, error) {
 }
 
 func (cli *Client) MyGroup() (dto.Group, error) {
-	u, err := cli.url("/api/me")
+	u, err := cli.url("/api/group/my")
 	if err != nil {
 		return dto.Group{}, fmt.Errorf("fail to build url: %w", err)
 	}
