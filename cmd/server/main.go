@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/torwald-sergesson/app-a/pkg/dto"
+	"github.com/torwald-sergesson/app-a/pkg/dto/v2"
 )
 
 type ObjectFactory func() interface{}
