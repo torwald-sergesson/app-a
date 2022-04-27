@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/torwald-sergesson/app-a/pkg/dto/v2"
@@ -66,5 +67,6 @@ func (cli *Client) Me() (dto.User, error) {
 	if err = json.Unmarshal(body, &user); err != nil {
 		return dto.User{}, fmt.Errorf("fail to unmarshal body: %w", err)
 	}
+	log.Printf("tags: [%s]\n", strings.Join(user.Tags, " "))
 	return user, nil
 }
