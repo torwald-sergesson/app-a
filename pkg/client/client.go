@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/torwald-sergesson/app-a/pkg/dto"
+	"github.com/torwald-sergesson/app-a/pkg/dto/v2"
 )
 
 type Client struct {
