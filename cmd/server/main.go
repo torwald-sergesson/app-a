@@ -9,9 +9,14 @@ import (
 	"github.com/torwald-sergesson/app-a/pkg/dto"
 )
 
-type baseHandler struct{}
+type ObjectFactory func() interface{}
 
-func (h *baseHandler) Handle(obj interface{}, w http.ResponseWriter, r *http.Request) {
+type baseHandler struct {
+	newObject ObjectFactory
+}
+
+func (h *baseHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	obj := h.newObject()
 	buf, err := json.Marshal(obj)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -24,35 +29,29 @@ func (h *baseHandler) Handle(obj interface{}, w http.ResponseWriter, r *http.Req
 	w.Write(buf)
 }
 
-type meHandler struct {
-	baseHandler
+var meUserHandler = &baseHandler{
+	newObject: func() interface{} {
+		return dto.User{
+			ID:   1,
+			Name: "Odin",
+			Age:  45,
+			Tags: []string{"hallo", "world", "new"},
+		}
+	},
 }
 
-func (h *meHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	data := dto.User{
-		ID:   1,
-		Name: "Odin",
-		Age:  45,
-		Tags: []string{"hallo", "world", "new"},
-	}
-	h.Handle(&data, w, r)
-}
-
-type myGroupHandler struct {
-	baseHandler
-}
-
-func (h *myGroupHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	data := dto.Group{
-		ID:   1,
-		Name: "Asgard",
-	}
-	h.Handle(&data, w, r)
+var myGroupHandler = &baseHandler{
+	newObject: func() interface{} {
+		return dto.Group{
+			ID:   1,
+			Name: "Asgard",
+		}
+	},
 }
 
 func main() {
-	http.Handle("/api/me", &meHandler{})
-	http.Handle("/api/group/my", &myGroupHandler{})
+	http.Handle("/api/me", meUserHandler)
+	http.Handle("/api/group/my", myGroupHandler)
 
 	if err := http.ListenAndServe("localhost:8080", nil); err != nil {
 		log.Fatalf("error: %s", err)
