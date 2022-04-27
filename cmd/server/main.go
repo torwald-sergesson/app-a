@@ -5,7 +5,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
+	"time"
 
+	"github.com/torwald-sergesson/app-a/pkg/client/v2"
 	"github.com/torwald-sergesson/app-a/pkg/dto/v2"
 )
 
@@ -50,9 +53,29 @@ var myGroupHandler = &baseHandler{
 	newObject: func() interface{} { return grpAsgard },
 }
 
+func syncWorker(period time.Duration) {
+	cli := client.NewClient("localhost:8080", time.Second)
+	ticker := time.NewTicker(period)
+	defer ticker.Stop()
+	for {
+		select {
+		case <-ticker.C:
+			usr, err := cli.Me()
+			if err != nil {
+				log.Printf("sync error: %s\n", err)
+				continue
+			}
+			log.Printf("SYNC user: %+v\n", usr)
+			log.Printf("SYNC tags: [%s]\n", strings.Join(usr.Tags, " "))
+		}
+	}
+}
+
 func main() {
 	http.Handle("/api/me", meUserHandler)
 	http.Handle("/api/group/my", myGroupHandler)
+
+	go syncWorker(time.Second * 5)
 
 	if err := http.ListenAndServe("localhost:8080", nil); err != nil {
 		log.Fatalf("error: %s", err)
