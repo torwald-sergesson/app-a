@@ -14,8 +14,8 @@ type meHandler struct{}
 func (h *meHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	data := dto.User{
 		ID:   1,
-		Name: "Tor",
-		Age:  44,
+		Name: "Odin",
+		Age:  45,
 		Tags: []string{"hallo", "world", "new"},
 	}
 
