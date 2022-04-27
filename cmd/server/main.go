@@ -16,7 +16,7 @@ func (h *meHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		ID:   1,
 		Name: "Tor",
 		Age:  44,
-		Tags: []string{"hallo", "world"},
+		Tags: []string{"hallo", "world", "new"},
 	}
 
 	buf, err := json.Marshal(&data)
